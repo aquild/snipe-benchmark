@@ -20,7 +20,7 @@ app.post("/:id/setup", async (req, res) => {
   res.send();
 });
 
-app.get("/:id/spam", async (req, res) => {
+app.get("/:id/snipe", async (req, res) => {
   let client = cache.get(req.params.id);
   if (client == undefined) return res.status(404).send();
 
