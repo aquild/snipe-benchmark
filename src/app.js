@@ -16,7 +16,7 @@ app.get("/:id", async (req, res) => {
 });
 
 app.post("/:id/setup", async (req, res) => {
-  cache.set(req.params.id, { time: req.body.time, earliest: -1 });
+  cache.set(req.params.id, { time: req.body.time, delay: -1 });
   res.send();
 });
 
@@ -24,10 +24,10 @@ app.get("/:id/snipe", async (req, res) => {
   let client = cache.get(req.params.id);
   if (client == undefined) return res.status(404).send();
 
-  if (client.time == -1 && Date.now() > client.time) {
-    client.time = Date.now();
-    res.send();
+  if (client.delay == -1 && Date.now() > client.time) {
+    client.delay = Date.now() - client.time;
   }
+  res.send();
 });
 
 const port = process.env.PORT || 8000;
