@@ -10,7 +10,10 @@
     "express": "^4.17.1",
     "node-cache": "^5.1.2"
   },
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
-    "start": "npx ."
+    "start": "node src/app.js"
   }
 }
