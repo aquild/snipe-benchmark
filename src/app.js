@@ -9,13 +9,15 @@ const cache = new NodeCache({
 });
 
 // Routes
+app.use(express.json());
+
 app.get("/:id", async (req, res) => {
   let client = cache.get(req.params.id);
   if (client == undefined) return res.status(404).send();
   res.send(client);
 });
 
-app.post("/:id/setup", async (req, res) => {
+app.post("/:id", async (req, res) => {
   cache.set(req.params.id, { time: req.body.time, delay: -1 });
   res.send();
 });
