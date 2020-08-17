@@ -28,6 +28,7 @@ app.get("/:id/snipe", async (req, res) => {
 
   if (client.delay == -1 && Date.now() > client.time) {
     client.delay = Date.now() - client.time;
+    console.log(`Server completed benchmark: ${req.params.id}`);
   }
   res.send();
 });
