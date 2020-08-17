@@ -1,0 +1,16 @@
+{
+  "name": "snipe-benchmark",
+  "version": "1.0.0",
+  "description": "Standard benchmark for Minecraft name snipers/blockers.",
+  "type": "module",
+  "main": "src/app.js",
+  "author": "Aquild <aquild@aquild.dev>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-cache": "^5.1.2"
+  },
+  "scripts": {
+    "start": "npx ."
+  }
+}
