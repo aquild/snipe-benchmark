@@ -7,7 +7,6 @@ const cache = new NodeCache({
   stdTTL: 10 * 60,
   checkperiod: 5 * 60,
 });
-const port = 8000;
 
 // Routes
 app.get("/:id", async (req, res) => {
@@ -31,4 +30,5 @@ app.get("/:id/spam", async (req, res) => {
   }
 });
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+const port = process.env.PORT || 8000;
+app.listen(port, () => console.log(`Server is listening on port ${port}`));
