@@ -9,9 +9,9 @@ const cache = new NodeCache({
 });
 
 // Temporary Homepage
-app.get('/',(_req, res)=>{
-  res.redirect('https://github.com/aquild/snipe-benchmark');
-})
+app.get("/", (_req, res) => {
+  res.redirect("https://github.com/aquild/snipe-benchmark");
+});
 
 // Routes
 app.use(express.json());
@@ -23,7 +23,10 @@ app.get("/:id", async (req, res) => {
 });
 
 app.post("/:id", async (req, res) => {
-  cache.set(req.params.id, { time: req.body.time, result: { delay: -1 } });
+  cache.set(req.params.id, {
+    time: req.body.time,
+    result: { early: 0, late: 0, delay: -1 },
+  });
   res.send();
 });
 
@@ -31,11 +34,16 @@ app.get("/:id/snipe", async (req, res) => {
   let client = cache.get(req.params.id);
   if (client == undefined) return res.status(404).send();
 
-  if (client.result.delay == -1 && Date.now() > client.time) {
-    client.result.delay = Date.now() - client.time;
-    console.log(`Server completed benchmark: ${req.params.id}`);
+  if (Date.now() < client.time) {
+    client.result.early++;
+  } else {
+    client.result.late++;
+    if (client.result.delay == -1) {
+      client.result.delay = Date.now() - client.time;
+      console.log(`Server completed benchmark: ${req.params.id}`);
+    }
   }
-  res.send();
+  res.status(204).send();
 });
 
 const port = process.env.PORT || 8000;
