@@ -26,7 +26,9 @@ _`<YOUR_ID>` is a unique identifier used to identify your sniper. This can be an
    {
        "time": <TIMESTAMP>,
        "result": {
-           "delay": <DELAY_MS>
+           "delay": <DELAY_MS>,
+           "early": <EARLY_REQS>,
+           "late": <LATE_REQS>
        }
    }
    ```
@@ -71,7 +73,9 @@ Running should return something like this:
 {
   "time": 1597768684767.3691,
   "result": {
-    "delay": 374.630859375
+    "delay": 374.630859375,
+    "early": 0,
+    "late": 1
   }
 }
 ```
@@ -84,7 +88,7 @@ Please feel free to fork and make a pull request. The code is quite simple and f
 
 ## Planned Features
 
-- [X] Quick-start guide
+- [x] Quick-start guide
 - [ ] More granular result data
 - [ ] Deploy on AWS behind Cloudfront to better simulate the Mojang API
 - [ ] Sniper leaderboards + auth system to prevent sabotage
