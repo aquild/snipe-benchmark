@@ -27,6 +27,7 @@ app.post("/:id", async (req, res) => {
     time: req.body.time,
     result: { early: 0, late: 0, delay: -1 },
   });
+  console.log(`Server registered benchmark: ${req.params.id}`);
   res.send();
 });
 
