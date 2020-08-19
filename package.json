@@ -7,7 +7,7 @@
   "author": "Aquild <aquild@aquild.dev>",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1",
+    "fastify": "^3.2.1",
     "node-cache": "^5.1.2"
   },
   "engines": {

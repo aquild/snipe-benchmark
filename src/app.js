@@ -1,7 +1,7 @@
-import express from "express";
+import fastify from "fastify";
 import NodeCache from "node-cache";
 
-const app = express();
+const app = fastify();
 const cache = new NodeCache({
   useClones: false,
   stdTTL: 10 * 60,
@@ -9,13 +9,11 @@ const cache = new NodeCache({
 });
 
 // Temporary Homepage
-app.get("/", (_req, res) => {
+app.get("/", async (_req, res) => {
   res.redirect("https://github.com/aquild/snipe-benchmark");
 });
 
 // Routes
-app.use(express.json());
-
 app.get("/:id", async (req, res) => {
   let client = cache.get(req.params.id);
   if (client == undefined) return res.status(404).send();
