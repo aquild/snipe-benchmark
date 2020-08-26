@@ -12,7 +12,7 @@ _`<YOUR_ID>` is a unique identifier used to identify your sniper. This can be an
 
    `POST /<YOUR_ID>`
 
-   ```json
+   ```jsonc
    {
        "time": <TIMESTAMP>
    }
@@ -22,27 +22,24 @@ _`<YOUR_ID>` is a unique identifier used to identify your sniper. This can be an
 
 3. Get your results from the server by requesting `GET <API_BASE>/<YOUR_ID>`. The server will send back a response like this:
 
-   ```json
-   {
-       "time": <TIMESTAMP>,
-       "requests": <TOTAL_REQUESTS>,
-       "result": {
-           "delay": <DELAY_MS>,
-           "requests": {
-               "start": <START_TIMESTAMP>,
-                "early": <EARLY_REQS>,
-                "late": <LATE_REQS>,
-                "end": <END_TIMESTAMP>,
-                "rate": <REQUEST_PER_SECOND>
-           }
+```jsonc
+{
+  "time": <BENCHMARK_TIME>,
+  "requests": <REQUEST_COUNT>,
+  "result": {
+    "delay": <SNIPE_DELAY>,
+    "requests": {
+      "start": <FIRST_REQUEST>,
+      "early": <EARLY_REQUESTS>,
+      "late": <LATE_REQUESTS>,
+      "end": <LAST_REQUEST>,
+      "rate": <REQUEST_RATE>
+    }
+  }
+}
+```
 
-       }
-   }
-   ```
-
-   Your results are in the `result` property. The most important property of the result object is the `delay`, which tells you how long after the benchmark time the server recieved a snipe packet. More result statistics will be added later.
-
-Example:
+## Example
 
 Here's an example in Python:
 
@@ -76,7 +73,7 @@ benchmark()
 
 Running should return something like this:
 
-```json
+```jsonc
 {
   "time": 1597768684767.3691,
   "requests": 1,
