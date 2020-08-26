@@ -40,7 +40,16 @@ app.get("/:id", async (req, res) => {
 app.post("/:id", async (req, res) => {
   cache.set(req.params.id, {
     time: req.body.time,
-    result: { early: 0, late: 0, delay: -1 },
+    requests: 0,
+    result: {
+      requests: {
+        start: -1,
+        early: 0,
+        late: 0,
+        end: -1,
+      },
+      delay: -1,
+    },
   });
   app.log.info(`Server registered benchmark: ${req.params.id}`);
   res.send();
@@ -50,12 +59,20 @@ app.get("/:id/snipe", async (req, res) => {
   let client = cache.get(req.params.id);
   if (client == undefined) return res.status(404).send();
 
-  if (Date.now() < client.time) {
-    client.result.early++;
+  const now = Date.now();
+
+  
+  if (client.requests == 0) client.result.requests.start = now;
+  client.result.requests.end = now;
+  client.requests++;
+  client.result.requests.rate = client.requests / (client.result.requests.end - client.result.requests.start) * 1000 // Requests / ms * 1000
+
+  if (now < client.time) {
+    client.result.requests.early++;
   } else {
-    client.result.late++;
+    client.result.requests.late++;
     if (client.result.delay == -1) {
-      client.result.delay = Date.now() - client.time;
+      client.result.delay = now - client.time;
       app.log.info(`Server completed benchmark: ${req.params.id}`);
     }
   }
