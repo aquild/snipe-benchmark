@@ -25,10 +25,17 @@ _`<YOUR_ID>` is a unique identifier used to identify your sniper. This can be an
    ```json
    {
        "time": <TIMESTAMP>,
+       "requests": <TOTAL_REQUESTS>,
        "result": {
            "delay": <DELAY_MS>,
-           "early": <EARLY_REQS>,
-           "late": <LATE_REQS>
+           "requests": {
+               "start": <START_TIMESTAMP>,
+                "early": <EARLY_REQS>,
+                "late": <LATE_REQS>,
+                "end": <END_TIMESTAMP>,
+                "rate": <REQUEST_PER_SECOND>
+           }
+
        }
    }
    ```
@@ -72,10 +79,16 @@ Running should return something like this:
 ```json
 {
   "time": 1597768684767.3691,
+  "requests": 1,
   "result": {
     "delay": 374.630859375,
-    "early": 0,
-    "late": 1
+    "requests": {
+      "start": 1597768685683.4823,
+      "early": 0,
+      "late": 1,
+      "end": 1597768685683.4823,
+      "rate": null // This would normally be the average requests / second, but we only sent one request
+    }
   }
 }
 ```
@@ -89,6 +102,7 @@ Please feel free to fork and make a pull request. The code is quite simple and f
 ## Planned Features
 
 - [x] Quick-start guide
-- [ ] More granular result data
+- [x] More granular result data
+- [x] Request / second result
 - [ ] Deploy on AWS behind Cloudfront to better simulate the Mojang API
 - [ ] Sniper leaderboards + auth system to prevent sabotage
